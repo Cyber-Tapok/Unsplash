@@ -1,9 +1,7 @@
-package com.tapok.unsplash.di.modules
+package com.tapok.unsplash.di.module
 
-import com.google.gson.GsonBuilder
-import com.tapok.unsplash.model.api.RetrofitClient
-import com.tapok.unsplash.model.api.UnsplashService
-import com.tapok.unsplash.model.api.interceptor.AuthAppInterceptor
+import com.tapok.unsplash.api.UnsplashService
+import com.tapok.unsplash.api.interceptor.AuthAppInterceptor
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -11,7 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 @Module
-class RetrofitModule {
+internal class NetworkModule {
 
     @Provides
     fun provideClient(): OkHttpClient {
@@ -27,7 +25,7 @@ class RetrofitModule {
 
     @Provides
     fun provideRetrofit(gsonConverterFactory: GsonConverterFactory, okHttpClient: OkHttpClient): Retrofit {
-        return RetrofitClient.getRetrofit(gsonConverterFactory, okHttpClient)
+        return com.tapok.unsplash.api.RetrofitClient.getRetrofit(gsonConverterFactory, okHttpClient)
     }
 
     @Provides

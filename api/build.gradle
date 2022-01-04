@@ -1,0 +1,31 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
+android {
+
+    defaultConfig {
+        consumerProguardFiles "consumer-rules.pro"
+        buildConfigField "String", "ACCESS_KEY", getApiKey("access_key")
+    }
+}
+
+dependencies {
+
+    def retrofit_version = "2.9.0"
+    api "com.squareup.retrofit2:retrofit:$retrofit_version"
+    api "com.squareup.retrofit2:converter-gson:$retrofit_version"
+}
+
+
+def getApiKey(String propName) {
+    def propsFile = rootProject.file('keystore.properties')
+    if (propsFile.exists()) {
+        def props = new Properties()
+        props.load(new FileInputStream(propsFile))
+        return props[propName]
+    } else {
+        throw FileNotFoundException("Create keystore.properties file to define API access key")
+    }
+}

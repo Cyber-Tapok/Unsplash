@@ -1,4 +1,4 @@
-package com.tapok.unsplash.model.api
+package com.tapok.unsplash.api
 
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

@@ -8,3 +8,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Unsplash"
 include ':app'
+include ':core'
+include ':api'
+include ':main-screen'

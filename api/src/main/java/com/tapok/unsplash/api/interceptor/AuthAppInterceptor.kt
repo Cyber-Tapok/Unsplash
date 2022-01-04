@@ -1,6 +1,6 @@
-package com.tapok.unsplash.model.api.interceptor
+package com.tapok.unsplash.api.interceptor
 
-import com.tapok.unsplash.BuildConfig
+import com.tapok.unsplash.api.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.Response
 
