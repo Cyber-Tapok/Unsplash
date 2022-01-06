@@ -4,7 +4,7 @@ import com.tapok.unsplash.api.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class AuthAppInterceptor : Interceptor {
+internal class AuthAppInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request().newBuilder()
             .addHeader("Accept-Version", "v1")

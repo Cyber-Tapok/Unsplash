@@ -10,19 +10,23 @@ android {
     defaultConfig {
         consumerProguardFiles "consumer-rules.pro"
     }
+
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
-    def dagger_version = '2.38.1'
-
-    api 'androidx.core:core-ktx:1.7.0'
-    api 'androidx.appcompat:appcompat:1.4.0'
-
+    implementation project(path: ':api')
     // Navigation
     api "com.github.terrakok:cicerone:7.1"
 
+    api 'com.google.android.material:material:1.4.0'
+    api 'androidx.core:core-ktx:1.7.0'
+    api 'androidx.appcompat:appcompat:1.4.0'
+    api 'androidx.constraintlayout:constraintlayout:2.1.2'
 
-    // Dagger 2
-    api "com.google.dagger:dagger:$dagger_version"
+    def dagger_version = '2.38.1'
+    implementation "com.google.dagger:dagger:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
 }
