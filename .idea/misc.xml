@@ -4,10 +4,17 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/slava/StudioProjects/Unsplash/app/src/main/res/drawable/ic_baseline_warning_24.xml" value="0.24635416666666668" />
+        <entry key="..\:/Users/slava/StudioProjects/Unsplash/app/src/main/res/layout/activity_main.xml" value="0.23333333333333334" />
         <entry key="..\:/Users/slava/StudioProjects/Unsplash/app/src/main/res/layout/photo_card_layout.xml" value="0.9" />
         <entry key="..\:/Users/slava/StudioProjects/Unsplash/core/src/main/res/layout/ic_launcher_background.xml" value="0.34479166666666666" />
         <entry key="..\:/Users/slava/StudioProjects/Unsplash/core/src/main/res/layout/photo_card_layout.xml" value="0.33" />
+        <entry key="..\:/Users/slava/StudioProjects/Unsplash/main-screen/src/main/res/drawable/photo_shape.xml" value="0.3609375" />
+        <entry key="..\:/Users/slava/StudioProjects/Unsplash/main-screen/src/main/res/drawable/textline_shape.xml" value="0.3609375" />
+        <entry key="..\:/Users/slava/StudioProjects/Unsplash/main-screen/src/main/res/layout/collection_placeholder.xml" value="0.34479166666666666" />
         <entry key="..\:/Users/slava/StudioProjects/Unsplash/main-screen/src/main/res/layout/main_screen.xml" value="0.2694746376811594" />
+        <entry key="..\:/Users/slava/StudioProjects/Unsplash/main-screen/src/main/res/layout/main_screen_placeholder.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/slava/StudioProjects/Unsplash/main-screen/src/main/res/layout/photo_placeholder.xml" value="0.25" />
+        <entry key="..\:/Users/slava/StudioProjects/Unsplash/main-screen/src/main/res/layout/textline_placeholder.xml" value="0.34479166666666666" />
       </map>
     </option>
   </component>

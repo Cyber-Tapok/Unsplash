@@ -1,14 +1,14 @@
 package com.tapok.core
 
-import com.tapok.unsplash.api.model.PhotoResponse
+import android.graphics.drawable.Drawable
 
 sealed class PhotoUrl {
     abstract val url: String
-    abstract val blurHash: String
+    abstract val placeholder: Drawable
 
-    data class SmallPhoto(override val url: String, override val blurHash: String): PhotoUrl()
+    data class SmallPhoto(override val url: String, override val placeholder: Drawable) : PhotoUrl()
 
-    data class RegularPhoto(override val url: String, override val blurHash: String): PhotoUrl()
+    data class RegularPhoto(override val url: String, override val placeholder: Drawable) : PhotoUrl()
 
-    data class FullPhoto(override val url: String, override val blurHash: String): PhotoUrl()
+    data class FullPhoto(override val url: String, override val placeholder: Drawable) : PhotoUrl()
 }
