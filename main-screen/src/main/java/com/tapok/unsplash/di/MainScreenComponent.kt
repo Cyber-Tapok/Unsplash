@@ -5,18 +5,20 @@ import android.content.Context
 import com.github.terrakok.cicerone.Router
 import com.tapok.core.Feature
 import com.tapok.core.Screens
+import com.tapok.unsplash.MainScreenFragment
 import com.tapok.unsplash.api.UnsplashService
 import dagger.BindsInstance
 import dagger.Component
 
-@[Feature Component]
+@[Feature Component(dependencies = [MainScreenDependency::class], modules = [MainScreenModule::class])]
 internal interface MainScreenComponent {
+
+    fun inject(fragment: MainScreenFragment)
 
     @Component.Builder
     interface Builder {
 
-        @BindsInstance
-        fun dependencies(mainScreenDependency: MainScreenDependency): Builder
+        fun deps(mainScreenDependency: MainScreenDependency): Builder
 
         fun build(): MainScreenComponent
     }
@@ -27,6 +29,7 @@ interface MainScreenDependency {
     val unsplashService: UnsplashService
     val globalRouter: Router
     val routes: Screens
+    val context: Context
 }
 
 interface MainScreenDependencyProvider {

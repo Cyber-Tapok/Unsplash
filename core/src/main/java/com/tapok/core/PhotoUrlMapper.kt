@@ -5,7 +5,7 @@ import javax.inject.Inject
 
 class PhotoUrlMapper @Inject constructor(
     private val blurHashMapper: BlurHashMapper,
-): Mapper<PhotoResponse, PhotoUrl> {
+) : Mapper<PhotoResponse, PhotoUrl> {
 
     var type: PhotoSize = PhotoSize.SMALL
         private set

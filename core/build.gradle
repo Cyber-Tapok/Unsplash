@@ -25,6 +25,14 @@ dependencies {
     api 'androidx.core:core-ktx:1.7.0'
     api 'androidx.appcompat:appcompat:1.4.0'
     api 'androidx.constraintlayout:constraintlayout:2.1.2'
+    // lifecycle
+    def lifecycle_version = "2.4.0"
+    api "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    api "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+
+    // Ktx
+    api "androidx.activity:activity-ktx:1.4.0"
+    api "androidx.fragment:fragment-ktx:1.4.0"
 
     def dagger_version = '2.38.1'
     implementation "com.google.dagger:dagger:$dagger_version"

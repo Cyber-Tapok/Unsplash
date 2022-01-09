@@ -12,12 +12,11 @@ class BlurHashMapper @Inject constructor(
 
     fun setResizeMultiplier(multiplier: Int) = apply { resizeMultiplier = multiplier }
 
-    fun transform(blurHash: String, height: Int, wight: Int): Drawable = BitmapDrawable(
-        resourceProvider.resources,
+    fun transform(blurHash: String, height: Int, wight: Int): Drawable = resourceProvider.getDrawable(
         BlurHashDecoder.decode(
             blurHash = blurHash,
             height = height / resizeMultiplier,
             width = wight / resizeMultiplier
-        )
+        )!!
     )
 }
