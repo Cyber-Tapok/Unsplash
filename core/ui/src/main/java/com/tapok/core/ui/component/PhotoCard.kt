@@ -1,16 +1,19 @@
-package com.tapok.core.component
+package com.tapok.core.ui.component
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
-import com.tapok.core.R
-import com.tapok.core.databinding.PhotoCardLayoutBinding
+import com.google.android.material.imageview.ShapeableImageView
+import com.tapok.core.ui.R
+import com.tapok.core.ui.databinding.PhotoCardLayoutBinding
 
 class PhotoCard @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
     FrameLayout(context, attrs, defStyleAttr) {
 
     private val binding = PhotoCardLayoutBinding.inflate(LayoutInflater.from(context), this, true)
+
+    val image: ShapeableImageView get() = binding.photo
 
     init {
         init(attrs)
@@ -20,8 +23,10 @@ class PhotoCard @JvmOverloads constructor(context: Context, attrs: AttributeSet?
         val styleAttrs = context.obtainStyledAttributes(attrs, R.styleable.PhotoCard)
         try {
             with(binding) {
+                this.photo
             }
 //            initButton(styleAttrs)
+
         } finally {
             styleAttrs.recycle()
         }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <declare-styleable name="PhotoCard">
-<!--        <attr name="showSubtitle" format="dimension" />-->
+        <!--        <attr name="showSubtitle" format="dimension" />-->
     </declare-styleable>
 </resources>

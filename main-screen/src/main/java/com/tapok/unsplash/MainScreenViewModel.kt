@@ -1,13 +1,13 @@
 package com.tapok.unsplash
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.tapok.core.onError
 import com.tapok.unsplash.domain.MainInteractor
 import com.tapok.unsplash.domain.MainScreenData
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,16 +15,24 @@ import javax.inject.Provider
 
 internal class MainScreenViewModel(private val interactor: MainInteractor) : ViewModel() {
 
-    val state: MutableStateFlow<MainScreenData?> = MutableStateFlow(null)
+    val state: MutableStateFlow<MainScreenState> = MutableStateFlow(MainScreenState.OnLoad)
 
     init {
-        viewModelScope.launch {
+        uploadData()
+    }
+
+    private fun uploadData() {
+        viewModelScope.launch(Dispatchers.IO) {
             interactor.uploadData()
-                .catch { Log.e("TTT", it.toString()) }
+                .onError { state.value = MainScreenState.OnError(it) }
                 .collect { data ->
-                state.value = data
-            }
+                    state.value = MainScreenState.OnSuccess(data)
+                }
         }
+    }
+
+    fun refreshData() {
+        uploadData()
     }
 
     internal class Factory @Inject constructor(private val interactor: Provider<MainInteractor>) :
@@ -37,4 +45,10 @@ internal class MainScreenViewModel(private val interactor: MainInteractor) : Vie
         }
 
     }
+}
+
+internal sealed class MainScreenState {
+    object OnLoad : MainScreenState()
+    data class OnError(val e: Throwable) : MainScreenState()
+    data class OnSuccess(val data: MainScreenData) : MainScreenState()
 }

@@ -1,6 +1,7 @@
 package com.tapok.unsplash.mapper
 
 import com.tapok.core.Mapper
+import com.tapok.core.PhotoSize
 import com.tapok.core.PhotoUrlMapper
 import com.tapok.unsplash.api.model.PhotoResponse
 import com.tapok.unsplash.model.RandomPhoto
@@ -11,6 +12,6 @@ internal class RandomPhotoMapper @Inject constructor(
 ) : Mapper<PhotoResponse, RandomPhoto> {
 
     override fun transform(data: PhotoResponse): RandomPhoto {
-        return RandomPhoto(data.id, photoUrlMapper.transform(data))
+        return RandomPhoto(data.id, photoUrlMapper.photoSize(PhotoSize.REGULAR).transform(data))
     }
 }

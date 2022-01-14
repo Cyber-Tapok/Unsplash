@@ -1,3 +1,5 @@
 <resources>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="search">Найти</string>
+    <string name="collection">Коллекции</string>
+    <string name="show_all">Посмотреть все</string>
 </resources>
