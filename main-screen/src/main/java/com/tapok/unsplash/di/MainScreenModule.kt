@@ -6,17 +6,13 @@ import com.tapok.unsplash.mapper.CollectionMapper
 import com.tapok.unsplash.mapper.RandomPhotoMapper
 import com.tapok.unsplash.model.MainRepository
 import com.tapok.unsplash.model.MainRepositoryImpl
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 
 @Module
-internal class MainScreenModule {
+internal interface MainScreenModule {
 
-    @Feature
-    @Provides
-    fun provideRepository(
-        service: UnsplashService,
-        randomPhotoMapper: RandomPhotoMapper,
-        collectionMapper: CollectionMapper,
-    ): MainRepository = MainRepositoryImpl(service, randomPhotoMapper, collectionMapper)
+    @[Feature Binds]
+    fun bindRepository(repositoryImpl: MainRepositoryImpl): MainRepository
 }

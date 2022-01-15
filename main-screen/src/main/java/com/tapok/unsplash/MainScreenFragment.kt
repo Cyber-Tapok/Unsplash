@@ -14,9 +14,11 @@ import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
+import com.tapok.core.ScreenState
 import com.tapok.unsplash.databinding.MainScreenBinding
 import com.tapok.unsplash.model.Collection
-import com.tapok.unsplash.model.MainScreenComponentHolder
+import com.tapok.unsplash.di.MainScreenComponentHolder
+import com.tapok.unsplash.domain.MainScreenData
 import com.tapok.unsplash.model.RandomPhoto
 import dagger.Lazy
 import kotlinx.coroutines.flow.collect
@@ -46,7 +48,7 @@ class MainScreenFragment : Fragment(R.layout.main_screen) {
             with(binding) {
                 root.setOnRefreshListener { viewModel.refreshData() }
                 search.setOnClickListener { searchClicked() }
-                randomPhoto.setOnClickListener { randomPhotoClicked() }
+                randomPhoto.setOnClickListener { viewModel.navigateToDetail() }
             }
         }
         lifecycleScope.launch {
@@ -84,19 +86,15 @@ class MainScreenFragment : Fragment(R.layout.main_screen) {
         Toast.makeText(requireContext(), "item.toString()", Toast.LENGTH_LONG).show()
     }
 
-    private fun randomPhotoClicked() {
-        Toast.makeText(requireContext(), "item.toString()", Toast.LENGTH_LONG).show()
-    }
-
-    private fun stateHandler(state: MainScreenState) = when (state) {
-        is MainScreenState.OnError -> {
+    private fun stateHandler(state: ScreenState<MainScreenData>) = when (state) {
+        is ScreenState.OnError -> {
             disableLoading()
             Toast.makeText(requireContext(), state.e.localizedMessage, Toast.LENGTH_SHORT).show()
         }
-        MainScreenState.OnLoad -> with(binding) {
+        ScreenState.OnLoad -> with(binding) {
             dataLayout.isVisible = false
         }
-        is MainScreenState.OnSuccess -> {
+        is ScreenState.OnSuccess -> {
             binding.dataLayout.isVisible = true
             disableLoading()
             showRandomPhoto(state.data.randomPhoto)

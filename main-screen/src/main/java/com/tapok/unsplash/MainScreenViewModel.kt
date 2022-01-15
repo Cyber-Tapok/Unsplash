@@ -3,6 +3,9 @@ package com.tapok.unsplash
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.github.terrakok.cicerone.Router
+import com.tapok.core.ScreenState
+import com.tapok.core.Screens
 import com.tapok.core.onError
 import com.tapok.unsplash.domain.MainInteractor
 import com.tapok.unsplash.domain.MainScreenData
@@ -13,9 +16,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Provider
 
-internal class MainScreenViewModel(private val interactor: MainInteractor) : ViewModel() {
+internal class MainScreenViewModel(
+    private val interactor: MainInteractor,
+    private val router: Router,
+    private val screens: Screens,
+) : ViewModel() {
 
-    val state: MutableStateFlow<MainScreenState> = MutableStateFlow(MainScreenState.OnLoad)
+    val state: MutableStateFlow<ScreenState<MainScreenData>> = MutableStateFlow(ScreenState.OnLoad)
 
     init {
         uploadData()
@@ -24,9 +31,9 @@ internal class MainScreenViewModel(private val interactor: MainInteractor) : Vie
     private fun uploadData() {
         viewModelScope.launch(Dispatchers.IO) {
             interactor.uploadData()
-                .onError { state.value = MainScreenState.OnError(it) }
+                .onError { state.value = ScreenState.OnError(it) }
                 .collect { data ->
-                    state.value = MainScreenState.OnSuccess(data)
+                    state.value = ScreenState.OnSuccess(data)
                 }
         }
     }
@@ -35,20 +42,26 @@ internal class MainScreenViewModel(private val interactor: MainInteractor) : Vie
         uploadData()
     }
 
-    internal class Factory @Inject constructor(private val interactor: Provider<MainInteractor>) :
+    fun navigateToDetail()  {
+        state.value.let { screenState ->
+            if (screenState is ScreenState.OnSuccess) {
+                router.navigateTo(screens.photoDetail(screenState.data.randomPhoto.id))
+            }
+        }
+    }
+
+    internal class Factory @Inject constructor(
+        private val interactor: Provider<MainInteractor>,
+        private val router: Provider<Router>,
+        private val screens: Provider<Screens>,
+    ) :
         ViewModelProvider.Factory {
 
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             require(modelClass == MainScreenViewModel::class.java)
-            return MainScreenViewModel(interactor.get()) as T
+            return MainScreenViewModel(interactor.get(), router.get(), screens.get()) as T
         }
 
     }
-}
-
-internal sealed class MainScreenState {
-    object OnLoad : MainScreenState()
-    data class OnError(val e: Throwable) : MainScreenState()
-    data class OnSuccess(val data: MainScreenData) : MainScreenState()
 }

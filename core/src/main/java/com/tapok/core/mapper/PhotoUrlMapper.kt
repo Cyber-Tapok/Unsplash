@@ -22,6 +22,7 @@ class PhotoUrlMapper @Inject constructor(
     }
 }
 
+
 enum class PhotoSize {
     SMALL, REGULAR, FULL
 }

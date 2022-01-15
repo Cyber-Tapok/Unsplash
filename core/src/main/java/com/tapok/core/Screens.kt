@@ -6,5 +6,5 @@ interface Screens {
 
     fun main(): FragmentScreen
     fun collections(): FragmentScreen
-    fun photoDetail(): FragmentScreen
+    fun photoDetail(photoId: String): FragmentScreen
 }

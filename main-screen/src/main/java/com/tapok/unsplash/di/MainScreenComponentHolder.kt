@@ -1,4 +1,4 @@
-package com.tapok.unsplash.model
+package com.tapok.unsplash.di
 
 import android.app.Application
 import com.tapok.core.ComponentHolder

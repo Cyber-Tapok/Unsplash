@@ -12,7 +12,7 @@ interface UnsplashService {
     suspend fun randomPhoto(): PhotoResponse
 
     @GET("/photos/{photoId}")
-    suspend fun photo(@Path("photoId") id: String)
+    suspend fun photo(@Path("photoId") id: String): PhotoResponse
 
     @GET("/collections")
     suspend fun collections(): List<CollectionResponse>
