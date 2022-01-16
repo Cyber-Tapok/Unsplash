@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -11,10 +12,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import argument
 import by.kirich1409.viewbindingdelegate.viewBinding
+import coil.load
+import com.tapok.core.PhotoUrl
 import com.tapok.core.ScreenState
 import com.tapok.unsplash.detail_photo_screen.databinding.DetailPhotoFragmentBinding
 import com.tapok.unsplash.detail_photo_screen.di.PhotoDetailComponentHolder
+import com.tapok.unsplash.detail_photo_screen.model.Author
 import com.tapok.unsplash.detail_photo_screen.model.Photo
+import com.tapok.unsplash.detail_photo_screen.model.PhotoStatistic
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -45,12 +50,49 @@ class PhotoDetailFragment : Fragment(R.layout.detail_photo_fragment) {
         }
     }
 
-    private fun stateHandler(state: ScreenState<Photo>) = when (state) {
-        is ScreenState.OnError -> Toast.makeText(requireContext(), state.e.localizedMessage, Toast.LENGTH_LONG).show()
-        ScreenState.OnLoad -> {}
-        is ScreenState.OnSuccess -> Toast.makeText(requireContext(), state.data.toString(), Toast.LENGTH_LONG).show()
+    private fun stateHandler(state: ScreenState<Photo>) {
+        when (state) {
+            is ScreenState.OnError -> Toast.makeText(requireContext(), state.e.localizedMessage, Toast.LENGTH_LONG)
+                .show()
+            ScreenState.OnLoad -> with(binding) {
+                dataLayout.isVisible = false
+            }
+            is ScreenState.OnSuccess -> {
+                binding.dataLayout.isVisible = true
+                disableLoading()
+                showImage(state.data.photo)
+                showAuthor(state.data.author)
+                showStatistic(state.data.statistic)
+            }
+        }
     }
 
+    private fun showImage(photo: PhotoUrl) = with(binding) {
+        image.image.load(photo.url) {
+            placeholder(photo.placeholder)
+        }
+    }
+
+    private fun showAuthor(author: Author) = with(binding) {
+        user.apply {
+            picture.load(author.profileImage)
+            username.text = author.username
+            fullName.text = author.name
+        }
+    }
+
+    private fun showStatistic(photoStatistic: PhotoStatistic) = with(binding) {
+        statistic.apply {
+            likes = photoStatistic.likes
+            downloads = photoStatistic.downloads
+            views = photoStatistic.views
+        }
+    }
+
+    private fun disableLoading() = with(binding) {
+//        root.isRefreshing = false
+        loadingLayout.isVisible = false
+    }
 
     companion object {
 

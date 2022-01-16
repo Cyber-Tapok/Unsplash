@@ -13,13 +13,8 @@
 
     <include
         layout="@layout/text_line_placeholder"
-        android:layout_width="@dimen/collection_width"
-        android:layout_height="8dp"
-        android:layout_marginBottom="10dp" />
-
-    <include
-        layout="@layout/text_line_placeholder"
         android:layout_width="120dp"
-        android:layout_height="8dp" />
+        android:layout_height="10dp"
+        android:layout_marginBottom="10dp" />
 
 </LinearLayout>

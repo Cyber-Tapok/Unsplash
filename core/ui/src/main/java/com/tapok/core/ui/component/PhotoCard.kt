@@ -4,6 +4,8 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.ImageView.ScaleType
 import com.google.android.material.imageview.ShapeableImageView
 import com.tapok.core.ui.R
 import com.tapok.core.ui.databinding.PhotoCardLayoutBinding
@@ -22,8 +24,9 @@ class PhotoCard @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     private fun init(attrs: AttributeSet?) {
         val styleAttrs = context.obtainStyledAttributes(attrs, R.styleable.PhotoCard)
         try {
-            with(binding) {
-                this.photo
+            with(binding.photo) {
+                adjustViewBounds  = styleAttrs.getBoolean(R.styleable.PhotoCard_adjustViewBounds, false)
+                scaleType = ScaleType.values()[styleAttrs.getInt(R.styleable.PhotoCard_scaleType, ScaleType.CENTER_CROP.ordinal)]
             }
 //            initButton(styleAttrs)
 

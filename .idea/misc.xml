@@ -12,14 +12,21 @@
         <entry key="..\:/Users/slava/StudioProjects/Unsplash/core/src/main/res/layout/photo_card_layout.xml" value="0.33" />
         <entry key="..\:/Users/slava/StudioProjects/Unsplash/core/ui/src/main/res/drawable/border_ripple.xml" value="0.3609375" />
         <entry key="..\:/Users/slava/StudioProjects/Unsplash/core/ui/src/main/res/drawable/border_shape.xml" value="0.3609375" />
+        <entry key="..\:/Users/slava/StudioProjects/Unsplash/core/ui/src/main/res/drawable/circle_shape.xml" value="0.3609375" />
         <entry key="..\:/Users/slava/StudioProjects/Unsplash/core/ui/src/main/res/drawable/corner_ripple.xml" value="0.2265625" />
         <entry key="..\:/Users/slava/StudioProjects/Unsplash/core/ui/src/main/res/drawable/ic_baseline_arrow_forward_24.xml" value="0.3609375" />
         <entry key="..\:/Users/slava/StudioProjects/Unsplash/core/ui/src/main/res/drawable/ic_baseline_search_24.xml" value="0.2265625" />
         <entry key="..\:/Users/slava/StudioProjects/Unsplash/core/ui/src/main/res/drawable/photo_shape.xml" value="0.3609375" />
         <entry key="..\:/Users/slava/StudioProjects/Unsplash/core/ui/src/main/res/drawable/text_line_shape.xml" value="0.2265625" />
         <entry key="..\:/Users/slava/StudioProjects/Unsplash/core/ui/src/main/res/layout/photo_card_layout.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/slava/StudioProjects/Unsplash/core/ui/src/main/res/layout/photo_placeholder.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/slava/StudioProjects/Unsplash/core/ui/src/main/res/layout/photo_statistic_layout.xml" value="0.34479166666666666" />
         <entry key="..\:/Users/slava/StudioProjects/Unsplash/core/ui/src/main/res/layout/t.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/slava/StudioProjects/Unsplash/core/ui/src/main/res/layout/text_line_placeholder.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/slava/StudioProjects/Unsplash/core/ui/src/main/res/layout/user_placeholder.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/slava/StudioProjects/Unsplash/core/ui/src/main/res/layout/user_view_layout.xml" value="0.2971014492753623" />
         <entry key="..\:/Users/slava/StudioProjects/Unsplash/detail-photo-screen/src/main/res/layout/detail_photo_fragment.xml" value="0.28020833333333334" />
+        <entry key="..\:/Users/slava/StudioProjects/Unsplash/detail-photo-screen/src/main/res/layout/detail_photo_placeholder.xml" value="0.34479166666666666" />
         <entry key="..\:/Users/slava/StudioProjects/Unsplash/main-screen/src/main/res/drawable/corner_ripple.xml" value="0.2046875" />
         <entry key="..\:/Users/slava/StudioProjects/Unsplash/main-screen/src/main/res/drawable/photo_shape.xml" value="0.3609375" />
         <entry key="..\:/Users/slava/StudioProjects/Unsplash/main-screen/src/main/res/drawable/textline_shape.xml" value="0.3609375" />

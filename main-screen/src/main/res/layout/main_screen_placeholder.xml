@@ -8,8 +8,7 @@
         layout="@layout/photo_placeholder"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_margin="10dp"
-        android:background="#dddddd" />
+        android:layout_margin="10dp" />
 
     <include
         layout="@layout/photo_placeholder"
