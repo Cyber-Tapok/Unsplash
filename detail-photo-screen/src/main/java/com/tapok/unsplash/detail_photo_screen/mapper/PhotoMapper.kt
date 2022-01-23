@@ -1,7 +1,7 @@
 package com.tapok.unsplash.detail_photo_screen.mapper
 
 import com.tapok.core.Mapper
-import com.tapok.core.PhotoUrlMapper
+import com.tapok.core.mapper.PhotoUrlMapper
 import com.tapok.unsplash.api.model.PhotoResponse
 import com.tapok.unsplash.detail_photo_screen.model.Photo
 import com.tapok.unsplash.detail_photo_screen.model.PhotoSize
@@ -18,7 +18,7 @@ internal class PhotoMapper @Inject constructor(
         val statistic = statisticMapper.transform(data)
         val author = authorMapper.transform(data)
         val timeMarkers = timeMarkersMapper.transform(data)
-        val photoUrl = photoUrlMapper.photoSize(com.tapok.core.PhotoSize.FULL).transform(data)
+        val photoUrl = photoUrlMapper.photoSize(com.tapok.core.mapper.PhotoSize.FULL).transform(data)
         return Photo(
             description = data.description,
             altDescription = data.altDescription,

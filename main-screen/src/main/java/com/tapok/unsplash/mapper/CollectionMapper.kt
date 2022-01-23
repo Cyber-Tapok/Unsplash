@@ -1,7 +1,7 @@
 package com.tapok.unsplash.mapper
 
 import com.tapok.core.Mapper
-import com.tapok.core.PhotoUrlMapper
+import com.tapok.core.mapper.PhotoUrlMapper
 import com.tapok.unsplash.api.model.CollectionResponse
 import com.tapok.unsplash.model.Collection
 import javax.inject.Inject

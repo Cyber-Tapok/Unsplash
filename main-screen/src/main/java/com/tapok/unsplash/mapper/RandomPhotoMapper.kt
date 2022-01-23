@@ -1,8 +1,8 @@
 package com.tapok.unsplash.mapper
 
 import com.tapok.core.Mapper
-import com.tapok.core.PhotoSize
-import com.tapok.core.PhotoUrlMapper
+import com.tapok.core.mapper.PhotoSize
+import com.tapok.core.mapper.PhotoUrlMapper
 import com.tapok.unsplash.api.model.PhotoResponse
 import com.tapok.unsplash.model.RandomPhoto
 import javax.inject.Inject

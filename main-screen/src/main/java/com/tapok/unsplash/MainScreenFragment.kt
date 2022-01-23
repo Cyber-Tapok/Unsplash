@@ -13,10 +13,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
-import coil.load
 import com.tapok.core.ScreenState
 import com.tapok.unsplash.databinding.MainScreenBinding
-import com.tapok.unsplash.model.Collection
 import com.tapok.unsplash.di.MainScreenComponentHolder
 import com.tapok.unsplash.domain.MainScreenData
 import com.tapok.unsplash.model.RandomPhoto
@@ -46,25 +44,27 @@ class MainScreenFragment : Fragment(R.layout.main_screen) {
         initAdapter()
         view.post {
             with(binding) {
-                root.setOnRefreshListener { viewModel.refreshData() }
-                search.setOnClickListener { searchClicked() }
-                randomPhoto.setOnClickListener { viewModel.navigateToDetail() }
+                root.setOnRefreshListener { viewModel.setEvent(MainScreenEvent.RefreshData) }
+                search.setOnClickListener { viewModel.setEvent(MainScreenEvent.OpenSearch) }
+                randomPhoto.setOnPhotoClicked { viewModel.setEvent(MainScreenEvent.OpenPhotoDetail(it)) }
             }
         }
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.state
-                    .collect(this@MainScreenFragment::stateHandler)
+                viewModel.uiState.collect(this@MainScreenFragment::handleState)
             }
+        }
+        lifecycleScope.launchWhenStarted {
+            viewModel.action.collect(this@MainScreenFragment::handleAction)
         }
     }
 
     private fun initAdapter() {
         collectionsAdapter = CollectionAdapter().apply {
-            onItemClicked = this@MainScreenFragment::itemClicked
+            onItemClicked = { viewModel.setEvent(MainScreenEvent.OpenCollections) }
         }
         val footerAdapter = CollectionFooterAdapter().apply {
-            onFooterClicked = this@MainScreenFragment::footerClicked
+            onFooterClicked = { viewModel.setEvent(MainScreenEvent.OpenCollections) }
         }
         concatAdapter = ConcatAdapter(collectionsAdapter, footerAdapter)
         with(binding.collections) {
@@ -74,22 +74,9 @@ class MainScreenFragment : Fragment(R.layout.main_screen) {
         }
     }
 
-    private fun footerClicked() {
-
-    }
-
-    private fun itemClicked(item: Collection) {
-        Toast.makeText(requireContext(), item.toString(), Toast.LENGTH_LONG).show()
-    }
-
-    private fun searchClicked() {
-        Toast.makeText(requireContext(), "item.toString()", Toast.LENGTH_LONG).show()
-    }
-
-    private fun stateHandler(state: ScreenState<MainScreenData>) = when (state) {
+    private fun handleState(state: ScreenState<MainScreenData>) = when (state) {
         is ScreenState.OnError -> {
             disableLoading()
-            Toast.makeText(requireContext(), state.e.localizedMessage, Toast.LENGTH_SHORT).show()
         }
         ScreenState.OnLoad -> with(binding) {
             dataLayout.isVisible = false
@@ -102,15 +89,17 @@ class MainScreenFragment : Fragment(R.layout.main_screen) {
         }
     }
 
+    private fun handleAction(action: MainScreenAction) = when (action) {
+        is MainScreenAction.ShowToast -> Toast.makeText(requireContext(), action.message, Toast.LENGTH_SHORT).show()
+    }
+
     private fun disableLoading() = with(binding) {
         root.isRefreshing = false
         loadingLayout.isVisible = false
     }
 
     private fun showRandomPhoto(data: RandomPhoto) = with(binding) {
-        randomPhoto.image.load(data.thumbnail.url) {
-            placeholder(data.thumbnail.placeholder)
-        }
+        randomPhoto.placePhoto(data.thumbnail)
     }
 
     override fun onDestroyView() {

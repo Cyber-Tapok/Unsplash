@@ -1,5 +1,8 @@
-package com.tapok.core
+package com.tapok.core.mapper
 
+import com.tapok.core.BlurHashMapper
+import com.tapok.core.Mapper
+import com.tapok.core.PhotoUrl
 import com.tapok.unsplash.api.model.PhotoResponse
 import javax.inject.Inject
 
@@ -15,9 +18,21 @@ class PhotoUrlMapper @Inject constructor(
     override fun transform(data: PhotoResponse): PhotoUrl {
         val placeholder = blurHashMapper.transform(blurHash = data.blurHash, height = data.height, wight = data.width)
         return when (type) {
-            PhotoSize.SMALL -> PhotoUrl.SmallPhoto(data.photoUrls.small, placeholder = placeholder)
-            PhotoSize.REGULAR -> PhotoUrl.RegularPhoto(data.photoUrls.regular, placeholder = placeholder)
-            PhotoSize.FULL -> PhotoUrl.FullPhoto(data.photoUrls.regular, placeholder = placeholder)
+            PhotoSize.SMALL -> PhotoUrl.SmallPhoto(
+                id = data.id,
+                url = data.photoUrls.small,
+                placeholder = placeholder
+            )
+            PhotoSize.REGULAR -> PhotoUrl.RegularPhoto(
+                id = data.id,
+                url = data.photoUrls.regular,
+                placeholder = placeholder
+            )
+            PhotoSize.FULL -> PhotoUrl.FullPhoto(
+                id = data.id,
+                url = data.photoUrls.regular,
+                placeholder = placeholder
+            )
         }
     }
 }

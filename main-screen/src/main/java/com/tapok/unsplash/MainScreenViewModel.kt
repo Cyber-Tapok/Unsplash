@@ -4,13 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.github.terrakok.cicerone.Router
-import com.tapok.core.ScreenState
-import com.tapok.core.Screens
-import com.tapok.core.onError
+import com.tapok.core.*
 import com.tapok.unsplash.domain.MainInteractor
 import com.tapok.unsplash.domain.MainScreenData
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,9 +17,9 @@ internal class MainScreenViewModel(
     private val interactor: MainInteractor,
     private val router: Router,
     private val screens: Screens,
-) : ViewModel() {
+) : StateViewModel<ScreenState<MainScreenData>, MainScreenAction, MainScreenEvent>() {
 
-    val state: MutableStateFlow<ScreenState<MainScreenData>> = MutableStateFlow(ScreenState.OnLoad)
+    override fun createInitialState(): ScreenState<MainScreenData> = ScreenState.OnLoad
 
     init {
         uploadData()
@@ -31,31 +28,37 @@ internal class MainScreenViewModel(
     private fun uploadData() {
         viewModelScope.launch(Dispatchers.IO) {
             interactor.uploadData()
-                .onError { state.value = ScreenState.OnError(it) }
+                .onError {
+                    setState(ScreenState.OnError(it))
+                    setAction { MainScreenAction.ShowToast(it.localizedMessage ?: "") }
+                }
                 .collect { data ->
-                    state.value = ScreenState.OnSuccess(data)
+                    setState(ScreenState.OnSuccess(data))
                 }
         }
     }
 
-    fun refreshData() {
+    override fun handleEvent(event: MainScreenEvent) = when (event) {
+        MainScreenEvent.RefreshData -> refreshData()
+        MainScreenEvent.OpenCollections -> { /* TODO add list of collections */ }
+        is MainScreenEvent.OpenPhotoDetail -> navigateToDetail(event.photoId)
+        MainScreenEvent.OpenSearch -> { /* TODO add search */ }
+        is MainScreenEvent.OpenCollectionDetail -> { /* TODO add collection detail */ }
+    }
+
+    private fun refreshData() {
         uploadData()
     }
 
-    fun navigateToDetail()  {
-        state.value.let { screenState ->
-            if (screenState is ScreenState.OnSuccess) {
-                router.navigateTo(screens.photoDetail(screenState.data.randomPhoto.id))
-            }
-        }
+    private fun navigateToDetail(photoId: String) {
+        router.navigateTo(screens.photoDetail(photoId))
     }
 
     internal class Factory @Inject constructor(
         private val interactor: Provider<MainInteractor>,
         private val router: Provider<Router>,
         private val screens: Provider<Screens>,
-    ) :
-        ViewModelProvider.Factory {
+    ) : ViewModelProvider.Factory {
 
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -64,4 +67,16 @@ internal class MainScreenViewModel(
         }
 
     }
+}
+
+sealed class MainScreenAction : Action {
+    data class ShowToast(val message: String) : MainScreenAction()
+}
+
+sealed class MainScreenEvent : Event {
+    object RefreshData : MainScreenEvent()
+    data class OpenPhotoDetail(val photoId: String) : MainScreenEvent()
+    object OpenCollections : MainScreenEvent()
+    object OpenSearch: MainScreenEvent()
+    data class OpenCollectionDetail(val collectionId: String): MainScreenEvent()
 }

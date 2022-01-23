@@ -24,10 +24,6 @@ internal class CollectionAdapter : ListAdapter<Collection, CollectionViewHolder>
     override fun onBindViewHolder(holder: CollectionViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
-
-    override fun getItemCount(): Int {
-        return super.getItemCount() - 1
-    }
 }
 
 internal class CollectionDiffCallback : DiffUtil.ItemCallback<Collection>() {
@@ -45,9 +41,7 @@ internal class CollectionViewHolder(private val binding: CollectionItemBinding) 
         with(binding) {
             title.text = data.title
             collectionSize.text = data.size.toString()
-            photo.image.load(data.cover.url) {
-                placeholder(data.cover.placeholder)
-            }
+            photo.placePhoto(data.cover)
         }
     }
 }

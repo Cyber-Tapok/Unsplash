@@ -63,14 +63,13 @@ class PhotoDetailFragment : Fragment(R.layout.detail_photo_fragment) {
                 showImage(state.data.photo)
                 showAuthor(state.data.author)
                 showStatistic(state.data.statistic)
+                showDescription(state.data.description)
             }
         }
     }
 
     private fun showImage(photo: PhotoUrl) = with(binding) {
-        image.image.load(photo.url) {
-            placeholder(photo.placeholder)
-        }
+        image.placePhoto(photo)
     }
 
     private fun showAuthor(author: Author) = with(binding) {
@@ -87,6 +86,14 @@ class PhotoDetailFragment : Fragment(R.layout.detail_photo_fragment) {
             downloads = photoStatistic.downloads
             views = photoStatistic.views
         }
+    }
+
+    private fun showDescription(description: String?) = with(binding.description) {
+        description ?: run {
+            isVisible = false
+            return@with
+        }
+        text = description
     }
 
     private fun disableLoading() = with(binding) {

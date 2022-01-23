@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.widget.FrameLayout
 import android.widget.TextView
 import com.tapok.core.ui.databinding.PhotoStatisticLayoutBinding
+import format
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -14,9 +15,9 @@ class PhotoStatistic @JvmOverloads constructor(context: Context, attrs: Attribut
 
     private val binding = PhotoStatisticLayoutBinding.inflate(LayoutInflater.from(context), this, true)
 
-    var likes: Int by binding.likes.statInt()
-    var downloads: Int by binding.downloads.statInt()
-    var views: Int by binding.views.statInt()
+    var likes: Int by binding.likes.statisticValue()
+    var downloads: Int by binding.downloads.statisticValue()
+    var views: Int by binding.views.statisticValue()
 
     init {
         init(attrs)
@@ -32,10 +33,10 @@ class PhotoStatistic @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 }
 
-internal fun TextView.statInt(): ReadWriteProperty<Any, Int> =
+internal fun TextView.statisticValue(): ReadWriteProperty<Any, Int> =
     object : ReadWriteProperty<Any, Int> {
         private var realValue: Int = 0
-        private val multiplier = 1000
+        private val multiplier = 1000.0
 
         override fun getValue(
             thisRef: Any,
@@ -48,7 +49,7 @@ internal fun TextView.statInt(): ReadWriteProperty<Any, Int> =
         ) {
             realValue = value
             val shortValue = if (realValue >= multiplier) {
-                "${realValue/multiplier}K"
+                "${(realValue/multiplier).format(1)}K"
             } else realValue.toString()
             text = shortValue
         }
